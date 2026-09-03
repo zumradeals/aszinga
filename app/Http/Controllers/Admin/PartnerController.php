@@ -15,5 +15,5 @@ class PartnerController extends Controller
     public function edit(Partner $partner){ return view('admin.partners.form',compact('partner')); }
     public function update(Request $request, Partner $partner){ $data=$this->validated($request); if($request->hasFile('logo')) { if($partner->logo_path) Storage::disk('public')->delete($partner->logo_path); $data['logo_path']=$request->file('logo')->store('partners','public'); } $partner->update($data); return redirect()->route('admin.partners.index')->with('success','Partenaire mis à jour.'); }
     public function destroy(Partner $partner){ if($partner->logo_path) Storage::disk('public')->delete($partner->logo_path); $partner->delete(); return back()->with('success','Partenaire supprimé.'); }
-    private function validated(Request $request): array { return $request->validate(['name'=>'required|string|max:180','website_url'=>'nullable|url|max:500','logo'=>'nullable|image|max:4096','sort_order'=>'nullable|integer|min:0','is_active'=>'required|boolean']); }
+    private function validated(Request $request): array { $request->validate(['name'=>'required|string|max:180','website_url'=>'nullable|url|max:500','logo'=>'nullable|image|max:4096','sort_order'=>'nullable|integer|min:0','is_active'=>'required|boolean']); return $request->only(['name','website_url','sort_order','is_active']); }
 }
