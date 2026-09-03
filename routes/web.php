@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\MatchController;
+use App\Http\Controllers\Admin\PlayerController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
@@ -21,5 +23,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', DashboardController::class)->name('dashboard');
+    Route::resource('players', PlayerController::class)->except('show');
+    Route::resource('matches', MatchController::class)->except('show')->parameters(['matches'=>'match']);
     Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 });
