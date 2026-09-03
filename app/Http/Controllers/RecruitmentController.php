@@ -1,0 +1,29 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\RecruitmentApplication;
+use Illuminate\Http\Request;
+
+class RecruitmentController extends Controller
+{
+    public function create(){ return view('recruitment'); }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'first_name'=>'required|string|max:100',
+            'last_name'=>'required|string|max:100',
+            'birth_date'=>'nullable|date|before:today',
+            'phone'=>'required|string|max:40',
+            'email'=>'nullable|email|max:180',
+            'position'=>'nullable|string|max:100',
+            'location'=>'nullable|string|max:180',
+            'experience'=>'nullable|string|max:3000',
+            'message'=>'nullable|string|max:3000',
+        ]);
+        $data['status']='nouvelle';
+        RecruitmentApplication::create($data);
+        return redirect()->route('recruitment')->with('success','Votre candidature a bien été envoyée à A.S ZINGA.');
+    }
+}
