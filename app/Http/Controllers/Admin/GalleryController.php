@@ -15,5 +15,5 @@ class GalleryController extends Controller
     public function edit(GalleryItem $gallery) { return view('admin.gallery.form',['item'=>$gallery]); }
     public function update(Request $request, GalleryItem $gallery) { $data=$this->validated($request); if($request->hasFile('image')) { if($gallery->image_path) Storage::disk('public')->delete($gallery->image_path); $data['image_path']=$request->file('image')->store('gallery','public'); } $gallery->update($data); return redirect()->route('admin.gallery.index')->with('success','Photo mise à jour.'); }
     public function destroy(GalleryItem $gallery) { if($gallery->image_path) Storage::disk('public')->delete($gallery->image_path); $gallery->delete(); return back()->with('success','Photo supprimée.'); }
-    private function validated(Request $request): array { return $request->validate(['title'=>'nullable|string|max:180','caption'=>'nullable|string|max:1000','taken_at'=>'nullable|date','image'=>'nullable|image|max:8192','is_published'=>'required|boolean']); }
+    private function validated(Request $request): array { $request->validate(['title'=>'nullable|string|max:180','caption'=>'nullable|string|max:1000','taken_at'=>'nullable|date','image'=>'nullable|image|max:8192','is_published'=>'required|boolean']); return $request->only(['title','caption','taken_at','is_published']); }
 }
