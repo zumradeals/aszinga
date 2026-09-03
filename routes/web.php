@@ -7,13 +7,14 @@ use App\Http\Controllers\Admin\PlayerController;
 use App\Http\Controllers\Admin\StaffMemberController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PublicContentController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
 Route::view('/club', 'club')->name('club');
-Route::view('/equipe', 'team')->name('team');
-Route::view('/matchs', 'matches')->name('matches');
-Route::view('/actualites', 'news.index')->name('news.index');
+Route::get('/equipe', [PublicContentController::class, 'team'])->name('team');
+Route::get('/matchs', [PublicContentController::class, 'matches'])->name('matches');
+Route::get('/actualites', [PublicContentController::class, 'news'])->name('news.index');
 Route::view('/galerie', 'gallery')->name('gallery');
 Route::view('/partenaires', 'partners')->name('partners');
 Route::view('/contact', 'contact')->name('contact');
