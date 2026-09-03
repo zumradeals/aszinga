@@ -1,0 +1,3 @@
+@extends('layouts.app')
+@section('title','Galerie — A.S ZINGA')
+@section('content')<section class="mx-auto max-w-7xl px-4 py-16 lg:px-8"><p class="font-black uppercase tracking-widest text-orange-600">En images</p><h1 class="mt-2 text-4xl font-black">Galerie</h1><div class="mt-8 rounded-2xl border border-dashed border-zinc-300 p-10 text-center text-zinc-500">Les photos officielles seront publiées ici depuis l’administration.</div></section>@endsection

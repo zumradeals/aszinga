@@ -1,0 +1,11 @@
+@import 'tailwindcss';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+:root { color-scheme: light; }
+html { scroll-behavior: smooth; }
+body { min-width: 320px; }
+a { transition: opacity .2s ease, transform .2s ease; }
+a:hover { opacity: .82; }

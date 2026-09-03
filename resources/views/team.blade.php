@@ -1,0 +1,3 @@
+@extends('layouts.app')
+@section('title','Équipe — A.S ZINGA')
+@section('content')<section class="mx-auto max-w-7xl px-4 py-16 lg:px-8"><p class="font-black uppercase tracking-widest text-orange-600">Effectif</p><h1 class="mt-2 text-4xl font-black">L’équipe A.S ZINGA</h1><div class="mt-8 rounded-2xl border border-dashed border-zinc-300 p-10 text-center text-zinc-500">L’effectif officiel sera affiché ici dès son enregistrement par l’administration.</div></section>@endsection
