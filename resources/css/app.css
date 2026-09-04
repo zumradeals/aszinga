@@ -9,3 +9,52 @@ html { scroll-behavior: smooth; }
 body { min-width: 320px; }
 a { transition: opacity .2s ease, transform .2s ease; }
 a:hover { opacity: .82; }
+
+/* Hero laboratory — visually merge 1–3 admin-selected player photos. */
+main > section:first-child a.group.absolute {
+    overflow: hidden;
+    isolation: isolate;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 76%, transparent 100%), linear-gradient(to right, transparent 0%, #000 13%, #000 87%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 7%, #000 76%, transparent 100%);
+}
+main > section:first-child a.group.absolute img {
+    object-fit: cover !important;
+    object-position: center top !important;
+    transform: scale(1.055);
+    filter: saturate(.92) contrast(1.04) brightness(.94);
+    transition: transform .7s ease, filter .7s ease;
+}
+main > section:first-child a.group.absolute::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(to top, rgba(7,7,7,.98) 0%, rgba(7,7,7,.48) 18%, transparent 43%), linear-gradient(to right, rgba(7,7,7,.42), transparent 27%, transparent 73%, rgba(7,7,7,.42));
+}
+main > section:first-child a.group.absolute:hover img {
+    transform: scale(1.085);
+    filter: saturate(1) contrast(1.04) brightness(1);
+}
+main > section:first-child a.group.absolute:nth-of-type(2) {
+    filter: drop-shadow(0 24px 32px rgba(0,0,0,.7));
+}
+main > section:first-child a.group.absolute:nth-of-type(2) img {
+    filter: saturate(1) contrast(1.06) brightness(1);
+}
+@media (min-width: 1024px) {
+    main > section:first-child a.group.absolute:first-of-type,
+    main > section:first-child a.group.absolute:last-of-type {
+        opacity: .86;
+    }
+    main > section:first-child a.group.absolute:nth-of-type(2) {
+        transform-origin: center bottom;
+    }
+}
+@media (max-width: 1023px) {
+    main > section:first-child a.group.absolute {
+        -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+        mask-image: linear-gradient(to bottom, #000 0%, #000 72%, transparent 100%);
+    }
+}
