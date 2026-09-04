@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CompetitionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\MatchController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\PartnerController;
 use App\Http\Controllers\Admin\PlayerController;
 use App\Http\Controllers\Admin\RecruitmentController as AdminRecruitmentController;
 use App\Http\Controllers\Admin\StaffMemberController;
+use App\Http\Controllers\Admin\StandingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicContentController;
@@ -42,5 +44,11 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
  Route::resource('gallery',GalleryController::class)->except('show')->parameters(['gallery'=>'gallery']);
  Route::resource('partners',PartnerController::class)->except('show');
  Route::resource('recruitment',AdminRecruitmentController::class)->only(['index','edit','update','destroy'])->parameters(['recruitment'=>'recruitment']);
+ Route::resource('competitions',CompetitionController::class)->except('show');
+ Route::get('/competitions/{competition}/standings/create',[StandingController::class,'create'])->name('competitions.standings.create');
+ Route::post('/competitions/{competition}/standings',[StandingController::class,'store'])->name('competitions.standings.store');
+ Route::get('/competitions/{competition}/standings/{standing}/edit',[StandingController::class,'edit'])->name('competitions.standings.edit');
+ Route::put('/competitions/{competition}/standings/{standing}',[StandingController::class,'update'])->name('competitions.standings.update');
+ Route::delete('/competitions/{competition}/standings/{standing}',[StandingController::class,'destroy'])->name('competitions.standings.destroy');
  Route::post('/logout',[LoginController::class,'destroy'])->name('logout');
 });
