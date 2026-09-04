@@ -20,6 +20,7 @@ Route::get('/equipe', [PublicContentController::class, 'team'])->name('team');
 Route::get('/equipe/{player}', [PublicContentController::class, 'player'])->name('players.show');
 Route::get('/matchs', [PublicContentController::class, 'matches'])->name('matches');
 Route::get('/matchs/{match}', [PublicContentController::class, 'match'])->name('matches.show');
+Route::get('/classement', [PublicContentController::class, 'standings'])->name('standings');
 Route::get('/actualites', [PublicContentController::class, 'news'])->name('news.index');
 Route::get('/actualites/{newsPost:slug}', [PublicContentController::class, 'newsShow'])->name('news.show');
 Route::get('/galerie', [PublicContentController::class, 'gallery'])->name('gallery');
