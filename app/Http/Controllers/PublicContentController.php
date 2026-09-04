@@ -19,6 +19,13 @@ class PublicContentController extends Controller
         ]);
     }
 
+    public function player(Player $player)
+    {
+        abort_unless($player->is_active, 404);
+
+        return view('players.show', compact('player'));
+    }
+
     public function matches()
     {
         return view('matches', [
@@ -27,11 +34,23 @@ class PublicContentController extends Controller
         ]);
     }
 
+    public function match(MatchGame $match)
+    {
+        return view('matches.show', compact('match'));
+    }
+
     public function news()
     {
         return view('news.index', [
             'posts' => NewsPost::where('status', 'published')->whereNotNull('published_at')->where('published_at', '<=', now())->orderByDesc('published_at')->paginate(9),
         ]);
+    }
+
+    public function newsShow(NewsPost $newsPost)
+    {
+        abort_unless($newsPost->status === 'published' && $newsPost->published_at && $newsPost->published_at->lte(now()), 404);
+
+        return view('news.show', ['post' => $newsPost]);
     }
 
     public function gallery()
