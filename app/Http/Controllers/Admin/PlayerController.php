@@ -21,7 +21,7 @@ class PlayerController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->validated($request);
+        $data = $this->playerData($request);
 
         if ($request->hasFile('photo')) {
             $data['photo_path'] = $request->file('photo')->store('players', 'public');
@@ -39,7 +39,7 @@ class PlayerController extends Controller
 
     public function update(Request $request, Player $player)
     {
-        $data = $this->validated($request);
+        $data = $this->playerData($request);
 
         if ($request->boolean('remove_photo') && $player->photo_path) {
             Storage::disk('public')->delete($player->photo_path);
@@ -47,10 +47,13 @@ class PlayerController extends Controller
         }
 
         if ($request->hasFile('photo')) {
+            $newPhotoPath = $request->file('photo')->store('players', 'public');
+
             if ($player->photo_path) {
                 Storage::disk('public')->delete($player->photo_path);
             }
-            $data['photo_path'] = $request->file('photo')->store('players', 'public');
+
+            $data['photo_path'] = $newPhotoPath;
         }
 
         $player->update($data);
@@ -63,14 +66,15 @@ class PlayerController extends Controller
         if ($player->photo_path) {
             Storage::disk('public')->delete($player->photo_path);
         }
+
         $player->delete();
 
         return back()->with('success', 'Joueur supprimé.');
     }
 
-    private function validated(Request $request): array
+    private function playerData(Request $request): array
     {
-        return $request->validate([
+        $validated = $request->validate([
             'first_name' => 'required|string|max:100',
             'last_name' => 'required|string|max:100',
             'display_name' => 'nullable|string|max:150',
@@ -85,5 +89,9 @@ class PlayerController extends Controller
             'photo' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
             'remove_photo' => 'nullable|boolean',
         ]);
+
+        unset($validated['photo'], $validated['remove_photo']);
+
+        return $validated;
     }
 }
