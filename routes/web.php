@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CompetitionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\HomeHeroController;
 use App\Http\Controllers\Admin\MatchController;
 use App\Http\Controllers\Admin\NewsPostController;
 use App\Http\Controllers\Admin\PartnerController;
@@ -37,6 +38,8 @@ Route::middleware('guest')->group(function () {
 });
 Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(function () {
  Route::get('/',DashboardController::class)->name('dashboard');
+ Route::get('/home-hero',[HomeHeroController::class,'edit'])->name('home-hero.edit');
+ Route::put('/home-hero',[HomeHeroController::class,'update'])->name('home-hero.update');
  Route::resource('players',PlayerController::class)->except('show');
  Route::resource('matches',MatchController::class)->except('show')->parameters(['matches'=>'match']);
  Route::resource('news',NewsPostController::class)->except('show')->parameters(['news'=>'news']);
