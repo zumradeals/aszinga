@@ -1,0 +1,8 @@
+@extends('layouts.admin')
+@section('title','Classement — '.$competition->name)
+@section('content')
+<a href="{{ route('admin.competitions.edit',$competition) }}" class="text-sm font-bold text-orange-600">← {{ $competition->name }}</a><h1 class="mt-2 text-3xl font-black">{{ $standing->exists ? 'Modifier une ligne' : 'Ajouter une équipe' }}</h1>
+<form method="POST" action="{{ $standing->exists ? route('admin.competitions.standings.update',[$competition,$standing]) : route('admin.competitions.standings.store',$competition) }}" class="mt-6 rounded-2xl bg-white p-6 shadow-sm">@csrf @if($standing->exists) @method('PUT') @endif
+<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"><label class="font-bold sm:col-span-2">Équipe<input name="team_name" required value="{{ old('team_name',$standing->team_name) }}" class="mt-2 w-full rounded-xl border-zinc-300"></label><label class="font-bold">Position<input type="number" min="1" name="position" required value="{{ old('position',$standing->position) }}" class="mt-2 w-full rounded-xl border-zinc-300"></label>@foreach(['played'=>'Matchs joués','won'=>'Victoires','drawn'=>'Nuls','lost'=>'Défaites','goals_for'=>'Buts pour','goals_against'=>'Buts contre','points'=>'Points'] as $field=>$label)<label class="font-bold">{{ $label }}<input type="number" min="0" name="{{ $field }}" required value="{{ old($field,$standing->{$field} ?? 0) }}" class="mt-2 w-full rounded-xl border-zinc-300"></label>@endforeach</div>
+@if($errors->any())<div class="mt-5 rounded-xl bg-red-50 p-4 text-sm text-red-700">{{ $errors->first() }}</div>@endif<button class="mt-6 rounded-xl bg-orange-500 px-6 py-3 font-black text-white">Enregistrer la ligne</button></form>
+@endsection
