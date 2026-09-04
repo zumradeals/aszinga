@@ -2,15 +2,21 @@
 <html lang="fr">
 <head>
     <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#18181b">
     <title>@yield('title', 'A.S ZINGA — Club de football à Abobo')</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
 </head>
 <body class="bg-zinc-50 text-zinc-950">
-<header class="sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur">
-    <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-8">
+<header class="sticky top-0 z-50 border-b border-black/10 bg-white/95 shadow-sm backdrop-blur" x-data="{ open:false }">
+    <div class="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 lg:px-8">
         <a href="{{ route('home') }}" class="flex min-w-0 items-center gap-3"><div class="grid size-12 shrink-0 place-items-center rounded-xl bg-zinc-950 font-black text-orange-500 ring-2 ring-orange-500">ASZ</div><div class="min-w-0"><strong class="block truncate text-base leading-none">A.S ZINGA</strong><span class="mt-1 block truncate text-[11px] font-semibold uppercase tracking-wider text-zinc-500">Abobo • Abidjan</span></div></a>
-        <nav class="hidden items-center gap-5 text-sm font-bold xl:flex"><a class="hover:text-orange-600" href="{{ route('club') }}">Le Club</a><a class="hover:text-orange-600" href="{{ route('team') }}">Équipe</a><a class="hover:text-orange-600" href="{{ route('matches') }}">Matchs</a><a class="hover:text-orange-600" href="{{ route('news.index') }}">Actualités</a><a class="hover:text-orange-600" href="{{ route('gallery') }}">Galerie</a><a class="hover:text-orange-600" href="{{ route('partners') }}">Partenaires</a><a class="hover:text-orange-600" href="{{ route('contact') }}">Contact</a></nav>
-        <a href="{{ route('recruitment') }}" class="shrink-0 rounded-full bg-orange-500 px-4 py-2.5 text-xs font-black text-white sm:text-sm">Rejoindre le club</a>
+        <nav class="hidden items-center gap-5 text-sm font-bold xl:flex"><a class="{{ request()->routeIs('club') ? 'text-orange-600' : 'hover:text-orange-600' }}" href="{{ route('club') }}">Le Club</a><a class="{{ request()->routeIs('team') ? 'text-orange-600' : 'hover:text-orange-600' }}" href="{{ route('team') }}">Équipe</a><a class="{{ request()->routeIs('matches') ? 'text-orange-600' : 'hover:text-orange-600' }}" href="{{ route('matches') }}">Matchs</a><a class="{{ request()->routeIs('news.*') ? 'text-orange-600' : 'hover:text-orange-600' }}" href="{{ route('news.index') }}">Actualités</a><a class="{{ request()->routeIs('gallery') ? 'text-orange-600' : 'hover:text-orange-600' }}" href="{{ route('gallery') }}">Galerie</a><a class="{{ request()->routeIs('partners') ? 'text-orange-600' : 'hover:text-orange-600' }}" href="{{ route('partners') }}">Partenaires</a><a class="{{ request()->routeIs('contact') ? 'text-orange-600' : 'hover:text-orange-600' }}" href="{{ route('contact') }}">Contact</a></nav>
+        <div class="flex shrink-0 items-center gap-2"><a href="{{ route('recruitment') }}" class="hidden rounded-full bg-orange-500 px-4 py-2.5 text-sm font-black text-white sm:inline-flex">Rejoindre</a><button type="button" @click="open=!open" :aria-expanded="open" aria-label="Ouvrir le menu" class="grid size-11 place-items-center rounded-xl border border-zinc-200 bg-white xl:hidden"><span class="text-xl" x-text="open ? '×' : '☰'">☰</span></button></div>
+    </div>
+    <div x-cloak x-show="open" @click.outside="open=false" class="border-t border-zinc-200 bg-white xl:hidden">
+      <nav class="mx-auto grid max-w-7xl grid-cols-2 gap-2 px-4 py-4 text-sm font-bold">
+       <a @click="open=false" class="rounded-xl bg-zinc-50 px-4 py-3" href="{{ route('club') }}">Le Club</a><a @click="open=false" class="rounded-xl bg-zinc-50 px-4 py-3" href="{{ route('team') }}">Équipe</a><a @click="open=false" class="rounded-xl bg-zinc-50 px-4 py-3" href="{{ route('matches') }}">Matchs</a><a @click="open=false" class="rounded-xl bg-zinc-50 px-4 py-3" href="{{ route('news.index') }}">Actualités</a><a @click="open=false" class="rounded-xl bg-zinc-50 px-4 py-3" href="{{ route('gallery') }}">Galerie</a><a @click="open=false" class="rounded-xl bg-zinc-50 px-4 py-3" href="{{ route('partners') }}">Partenaires</a><a @click="open=false" class="rounded-xl bg-zinc-50 px-4 py-3" href="{{ route('contact') }}">Contact</a><a @click="open=false" class="rounded-xl bg-orange-500 px-4 py-3 text-white" href="{{ route('recruitment') }}">Rejoindre le club</a>
+      </nav>
     </div>
 </header>
 <main>@yield('content')</main>
