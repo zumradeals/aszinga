@@ -13,10 +13,10 @@
  <div class="flex items-end justify-between gap-4"><div><p class="font-black uppercase tracking-widest text-orange-600">À la une</p><h2 class="mt-2 text-3xl font-black">Dernières publications</h2></div></div>
  <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
  @forelse($posts as $post)
-  <article class="group overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+  <a href="{{ route('news.show',$post) }}" class="group block overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
    <div class="overflow-hidden">@if($post->cover_image_path)<img src="{{ asset('storage/'.$post->cover_image_path) }}" alt="{{ $post->title }}" class="aspect-[16/10] w-full object-cover transition duration-500 group-hover:scale-105">@else<div class="grid aspect-[16/10] place-items-center bg-zinc-950"><span class="rounded-full border border-orange-500/40 px-5 py-2 text-sm font-black tracking-widest text-orange-500">A.S ZINGA</span></div>@endif</div>
-   <div class="p-6"><time class="text-xs font-black uppercase tracking-[.18em] text-orange-600">{{ optional($post->published_at)->format('d/m/Y') }}</time><h3 class="mt-3 text-2xl font-black leading-tight">{{ $post->title }}</h3><p class="mt-4 text-sm leading-6 text-zinc-600">{{ $post->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($post->body), 150) }}</p></div>
-  </article>
+   <div class="p-6"><time class="text-xs font-black uppercase tracking-[.18em] text-orange-600">{{ optional($post->published_at)->format('d/m/Y') }}</time><h3 class="mt-3 text-2xl font-black leading-tight">{{ $post->title }}</h3><p class="mt-4 text-sm leading-6 text-zinc-600">{{ $post->excerpt ?: \Illuminate\Support\Str::limit(strip_tags($post->body), 150) }}</p><p class="mt-5 text-sm font-black text-zinc-950">Lire l’article →</p></div>
+  </a>
  @empty
   <div class="col-span-full rounded-3xl border border-dashed border-zinc-300 bg-white p-12 text-center text-zinc-500">Aucune actualité publiée pour le moment.</div>
  @endforelse
