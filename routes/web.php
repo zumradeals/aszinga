@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ClubSettingController;
 use App\Http\Controllers\Admin\CompetitionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -40,6 +41,8 @@ Route::middleware(['auth','admin'])->prefix('admin')->name('admin.')->group(func
  Route::get('/',DashboardController::class)->name('dashboard');
  Route::get('/home-hero',[HomeHeroController::class,'edit'])->name('home-hero.edit');
  Route::put('/home-hero',[HomeHeroController::class,'update'])->name('home-hero.update');
+ Route::get('/club-settings',[ClubSettingController::class,'edit'])->name('club-settings.edit');
+ Route::put('/club-settings',[ClubSettingController::class,'update'])->name('club-settings.update');
  Route::resource('players',PlayerController::class)->except('show');
  Route::resource('matches',MatchController::class)->except('show')->parameters(['matches'=>'match']);
  Route::resource('news',NewsPostController::class)->except('show')->parameters(['news'=>'news']);
